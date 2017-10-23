@@ -138,7 +138,6 @@ add_library(dronecore ${library_type}
 )
 
 target_link_libraries(dronecore
-    curl
     ${platform_libs}
     ${curl_lib}
 )
