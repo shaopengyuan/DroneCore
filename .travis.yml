@@ -9,10 +9,6 @@ matrix:
       compiler: gcc
       env:
       - BUILD_TARGET=gcc_build
-      addons:
-        apt:
-          packages:
-            - doxygen
     - os: linux
       dist: trusty
       sudo: false
@@ -28,7 +24,6 @@ matrix:
           packages:
             - gcc-5
             - g++-5
-            - doxygen
     - os: linux
       dist: trusty
       sudo: false
@@ -44,7 +39,6 @@ matrix:
           packages:
             - gcc-6
             - g++-6
-            - doxygen
     - os: linux
       sudo: required
       services:
@@ -73,23 +67,13 @@ install:
 
 script:
 - if [[ "${BUILD_TARGET}" = "gcc_build" ]]; then
-    make INSTALL_PREFIX=/usr;
-    make install;
-    make docs;
-    make run_unit_tests;
-    (cd example/takeoff_land && mkdir build && cd build && cmake .. && make);
-    (cd example/fly_mission && mkdir build && cd build && cmake .. && make);
-    (cd example/offboard_velocity && mkdir build && cd build && cmake .. && make);
+    make BUILD_TYPE=Debug run_unit_tests -j4;
     make clean;
-    make INSTALL_PREFIX=/usr BUILD_TYPE=Release;
-    make install;
-    make run_unit_tests;
+    make BUILD_TYPE=Release run_unit_tests -j4;
   fi
 - if [[ "${BUILD_TARGET}" = "coverage_build" ]]; then
-    make BUILD_TYPE=Coverage;
-    make run_unit_tests;
+    make BUILD_TYPE=Coverage run_unit_tests -j4;
   fi
-
 - if [[ "${BUILD_TARGET}" = "docker_build" ]]; then
     docker run -it -v $TRAVIS_BUILD_DIR:/home/docker1000/src/DroneCore:rw dronecore/dronecore make;
     docker run -it -v $TRAVIS_BUILD_DIR:/home/docker1000/src/DroneCore:rw dronecore/dronecore make install;
