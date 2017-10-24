@@ -7,6 +7,9 @@ project(dronecore)
 # Add DEBUG define for Debug target
 set(CMAKE_CXX_FLAGS_DEBUG "-DDEBUG")
 
+# This finds thread libs on Linux, Mac, and Windows.
+find_package(Threads REQUIRED)
+
 if(NOT MSVC)
     # Clang and GCC
     # We want C++11 and lots of warnings.
@@ -33,7 +36,6 @@ if(NOT MSVC)
         set(warnings "${warnings} -Wuseless-cast -Wlogical-op")
     endif()
 
-    set(platform_libs "pthread")
     set(curl_lib "curl")
 
 else()
@@ -47,7 +49,6 @@ else()
 
     set(warnings "-WX -W2")
 
-    set(platform_libs "Ws2_32.lib")
     # You need to call cmake with -DWIN_CURL_INCLUDE_DIR:STRING="C:\\curl-7.54.1\\include"
     if(NOT WIN_CURL_INCLUDE_DIR)
         message(FATAL_ERROR "Please provide argument -DWIN_CURL_INCLUDE_DIR:STRING=\"path_to_curl_include\"")
@@ -138,7 +139,7 @@ add_library(dronecore ${library_type}
 )
 
 target_link_libraries(dronecore
-    ${platform_libs}
+    ${CMAKE_THREAD_LIBS_INIT}
     ${curl_lib}
 )
 
