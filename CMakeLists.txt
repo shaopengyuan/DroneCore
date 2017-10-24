@@ -108,7 +108,7 @@ if (IOS)
     include_directories(curl-android-ios/prebuilt-with-ssl/ios/include)
 endif()
 
-if (IOS OR ANDROID OR WINDOWS)
+if (IOS OR ANDROID)
     set(library_type "STATIC")
 else()
     set(library_type "SHARED")
