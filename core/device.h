@@ -19,12 +19,12 @@ namespace dronecore {
 class DroneCoreImpl;
 
 
-class DeviceImpl
+class Device
 {
 public:
-    explicit DeviceImpl(DroneCoreImpl *parent,
-                        uint8_t target_system_id);
-    ~DeviceImpl();
+    explicit Device(DroneCoreImpl *parent,
+                    uint8_t target_system_id);
+    ~Device();
 
     void process_mavlink_message(const mavlink_message_t &message);
 
@@ -104,8 +104,8 @@ public:
     void unlock_communication();
 
     // Non-copyable
-    DeviceImpl(const DeviceImpl &) = delete;
-    const DeviceImpl &operator=(const DeviceImpl &) = delete;
+    Device(const Device &) = delete;
+    const Device &operator=(const Device &) = delete;
 
 private:
 
@@ -116,8 +116,8 @@ private:
     void set_connected();
     void set_disconnected();
 
-    static void device_thread(DeviceImpl *self);
-    static void send_heartbeat(DeviceImpl *self);
+    static void device_thread(Device *self);
+    static void send_heartbeat(Device *self);
 
     static void receive_float_param(bool success, MavlinkParameters::ParamValue value,
                                     get_param_float_callback_t callback);
