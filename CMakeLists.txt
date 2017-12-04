@@ -199,6 +199,11 @@ install(FILES
 
 # TODO: enable again
 if(NOT IOS AND NOT ANDROID AND false)
+set(dronecore_install_include_dir "include/dronecore")
+set(dronecore_install_lib_dir ${lib_path})
+
+add_subdirectory(plugins/action)
+
     add_subdirectory(integration_tests)
 
     if (DEFINED EXTERNAL_DIR AND NOT EXTERNAL_DIR STREQUAL "")
@@ -266,6 +271,7 @@ if(NOT IOS AND NOT ANDROID AND false)
 
     target_link_libraries(integration_tests_runner
         dronecore
+        dronecore_action
         gtest
         gtest_main
         gmock
