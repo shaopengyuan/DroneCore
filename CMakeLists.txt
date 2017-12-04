@@ -203,6 +203,7 @@ set(dronecore_install_include_dir "include/dronecore")
 set(dronecore_install_lib_dir ${lib_path})
 
 add_subdirectory(plugins/action)
+add_subdirectory(plugins/telemetry)
 
     add_subdirectory(integration_tests)
 
@@ -271,6 +272,7 @@ add_subdirectory(plugins/action)
 
     target_link_libraries(integration_tests_runner
         dronecore
+        dronecore_telemetry
         dronecore_action
         gtest
         gtest_main
