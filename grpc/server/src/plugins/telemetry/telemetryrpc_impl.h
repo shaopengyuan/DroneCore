@@ -1,5 +1,5 @@
 #include "telemetry.h"
-#include "telemetry.grpc.pb.h"
+#include "telemetry/telemetry.grpc.pb.h"
 #include <google/protobuf/empty.pb.h>
 
 using grpc::Status;
